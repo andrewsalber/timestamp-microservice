@@ -26,6 +26,14 @@ app.get("/api/hello", function (req, res) {
 //first challenge
 app.get("/api/:date?", function (req, res) {
   let date = req.params.date;
+  console.log(date);
+  if (date === undefined) {
+    let dateObject =  new Date();
+    res.json({
+      unix: dateObject.getTime(),
+      utc: dateObject.toUTCString()
+    });
+  }
   
   let dateObject =  new Date(date);
   if (dateObject.getTime()) {
@@ -42,13 +50,25 @@ app.get("/api/:date?", function (req, res) {
     dateObject = new Date(date);
     console.log(dateObject.getTime());
     console.log(dateObject.toUTCString());
-    res.json({
-      unix: dateObject.getTime(),
-      utc: dateObject.toUTCString()
-    });
+    if (!dateObject.getTime()) {
+      res.json({ error : "Invalid Date" })
+    } else {
+      res.json({
+        unix: dateObject.getTime(),
+        utc: dateObject.toUTCString()
+      });
+    }
   }
-  
 })
+
+//first challenge
+app.get("/api/", function (req, res) {
+  let dateObject =  new Date();
+  res.json({
+    unix: dateObject.getTime(),
+    utc: dateObject.toUTCString()
+  })
+});
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
