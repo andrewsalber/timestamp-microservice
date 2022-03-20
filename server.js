@@ -26,7 +26,6 @@ app.get("/api/hello", function (req, res) {
 //first challenge
 app.get("/api/:date?", function (req, res) {
   let date = req.params.date;
-  console.log(date);
   if (date === undefined) {
     let dateObject =  new Date();
     res.json({
@@ -37,19 +36,15 @@ app.get("/api/:date?", function (req, res) {
   
   let dateObject =  new Date(date);
   if (dateObject.getTime()) {
-    console.log("did not make it to else")
-    console.log(dateObject.getTime());
-    console.log(dateObject.toUTCString());
+
     res.json({
       unix: dateObject.getTime(),
       utc: dateObject.toUTCString()
     });
   } else {
-    console.log("made it to the else")
     date = parseInt(date);
     dateObject = new Date(date);
-    console.log(dateObject.getTime());
-    console.log(dateObject.toUTCString());
+
     if (!dateObject.getTime()) {
       res.json({ error : "Invalid Date" })
     } else {
