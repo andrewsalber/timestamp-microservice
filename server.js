@@ -18,13 +18,32 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-
 // your first API endpoint... 
 app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+//first challenge
+app.get("/api/:date?", function (req, res) {
+  let date = req.params.date;
+  //console.log(req);
+  console.log(date);
+  //console.log(req.params.date)
 
+  //function createDateAsUTC(date) {
+  //  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
+//}
+
+  let dateObject =  new Date(date);
+  //console.log(dateObject);
+  //console.log(dateObject.getTime());
+  //console.log(dateObject.toUTCString());
+
+  res.json({
+    unix: dateObject.getTime(),
+    utc: dateObject
+  });
+})
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
