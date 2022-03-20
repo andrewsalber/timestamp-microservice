@@ -26,23 +26,28 @@ app.get("/api/hello", function (req, res) {
 //first challenge
 app.get("/api/:date?", function (req, res) {
   let date = req.params.date;
-  //console.log(req);
-  console.log(date);
-  //console.log(req.params.date)
-
-  //function createDateAsUTC(date) {
-  //  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
-//}
-
+  
   let dateObject =  new Date(date);
-  //console.log(dateObject);
-  //console.log(dateObject.getTime());
-  //console.log(dateObject.toUTCString());
-
-  res.json({
-    unix: dateObject.getTime(),
-    utc: dateObject
-  });
+  if (dateObject.getTime()) {
+    console.log("did not make it to else")
+    console.log(dateObject.getTime());
+    console.log(dateObject.toUTCString());
+    res.json({
+      unix: dateObject.getTime(),
+      utc: dateObject.toUTCString()
+    });
+  } else {
+    console.log("made it to the else")
+    date = parseInt(date);
+    dateObject = new Date(date);
+    console.log(dateObject.getTime());
+    console.log(dateObject.toUTCString());
+    res.json({
+      unix: dateObject.getTime(),
+      utc: dateObject.toUTCString()
+    });
+  }
+  
 })
 
 // listen for requests :)
